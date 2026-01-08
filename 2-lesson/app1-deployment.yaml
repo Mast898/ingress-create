@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app1
+spec:
+  selector:
+    matchLabels:
+      app: app1
+  template:
+    metadata:
+      labels:
+        app: app1
+    spec:
+      containers:
+      - name: my-images
+        image: ghcr.io/mast898/my-nginx:1.0
+        resources: #Burstable 
+          requests:
+            memory: "100Mi"
+            cpu: "100m"
+          limits:
+            memory: "150Mi"
+            cpu: "200m"
+        ports:
+        - containerPort: 80
+
+---
+apiVersion: v1 
+kind: Service
+metadata:
+  name: app1
+spec:
+  selector:
+    app: app1
+  ports:
+  - port: 80
+    targetPort: 80

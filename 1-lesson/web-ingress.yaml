@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web-ingress
+spec:
+  ingressClassName: nginx #указываем класс контроллера (nginx Ingress Controller)
+  rules:
+  - host: example.com # имя хоста для маршрутизации (домен, который мы потом пропишем в hosts)
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: web # имя сервиса
+            port: 
+              number: 80
